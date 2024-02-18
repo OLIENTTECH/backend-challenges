@@ -9,6 +9,13 @@
 v1.21.7
 ```
 
+プロジェクトを開始する前に下記を実行してください。
+lefthookがインストールされていない場合は、brewやこちらの[github](https://github.com/evilmartians/lefthook)を参考にしてlefthookをインストールしてください。
+
+```shell
+lefthook install
+```
+
 `.env.local` ファイルを作成し、`.env.example`の内容を設定してください。
 
 ```shell
