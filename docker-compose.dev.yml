@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+  api:
+    container_name: api
+    build:
+      context: ./docker/api
+      dockerfile: Dockerfile
+      target: dev
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/go/src/app
+    env_file:
+      - ./.env.local
+    environment:
+      GO111MODULE: "on"
+      PORT: 8080
+      FRONT_ENDPOINT: http://localhost:3000
+    ports:
+      - 8080:8080
+    networks:
+      - backend
+    depends_on:
+      - rdb
+
+  rdb:
+    image: postgres:alpine
+    container_name: challenge_rdb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=P@ssw0rd
+    ports:
+      - 5432:5432
+    restart: always
+    networks:
+      - backend
+
+  panel:
+    image: "adminer:latest"
+    restart: always
+    ports:
+      - 8082:8080
+    depends_on:
+      - rdb
+    networks:
+      - backend
+
+volumes:
+  db_data:
+
+networks:
+  backend:
+    driver: bridge

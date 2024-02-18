@@ -1,0 +1,15 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+
+pre-commit:
+  parallel: true
+  commands:
+    backend-lint:
+      # root: 'backend'
+      glob: '*.go'
+      run: |
+        docker-compose -f docker-compose.dev.yml exec api go mod tidy
+        docker-compose -f docker-compose.dev.yml exec api golangci-lint run --fix ./...
+        git add {staged_files}

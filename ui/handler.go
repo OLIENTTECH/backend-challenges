@@ -1,0 +1,31 @@
+package ui
+
+import (
+	"github.com/OLIENTTECH/backend-challenges/pkg/log"
+	"github.com/OLIENTTECH/backend-challenges/usecase"
+)
+
+type Handler interface {
+	HealthCheck() Health
+	User() User
+}
+
+type handler struct {
+	uc     usecase.Usecase
+	logger *log.Logger
+}
+
+func NewHandler(uc usecase.Usecase, logger *log.Logger) Handler {
+	return &handler{
+		uc:     uc,
+		logger: logger,
+	}
+}
+
+func (h *handler) HealthCheck() Health {
+	return NewHealth()
+}
+
+func (h *handler) User() User {
+	return NewUser(h.uc.User(), h.logger)
+}
