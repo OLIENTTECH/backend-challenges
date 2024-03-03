@@ -5,13 +5,14 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+	"github.com/uptrace/bun"
+	"go.uber.org/mock/gomock"
+
 	"github.com/OLIENTTECH/backend-challenges/domain/model"
 	"github.com/OLIENTTECH/backend-challenges/internal/cerror"
 	"github.com/OLIENTTECH/backend-challenges/usecase/input"
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
-	"github.com/stretchr/testify/require"
-	"github.com/uptrace/bun"
-	"go.uber.org/mock/gomock"
 )
 
 func Test_user_Get(t *testing.T) {
