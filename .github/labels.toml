@@ -1,0 +1,94 @@
+["CI/CD"]
+color = "64748b"
+name = "CI/CD"
+description = ""
+
+[S-awaiting-merge]
+color = "0ea5e9"
+name = "S-awaiting-merge"
+description = ""
+
+[S-awaiting-review]
+color = "facc15"
+name = "S-awaiting-review"
+description = ""
+
+[S-needs-code-change]
+color = "dc2626"
+name = "S-needs-code-change"
+description = ""
+
+[backend]
+color = "d97706"
+name = "backend"
+description = ""
+
+[bug]
+color = "d73a4a"
+name = "bug"
+description = "予期しない挙動・バグ"
+
+[dependencies]
+color = "ededed"
+name = "dependencies"
+description = "依存パッケージの追加・更新・削除"
+
+[documentation]
+color = "0075ca"
+name = "documentation"
+description = "ドキュメントの整備"
+
+[duplicate]
+color = "cfd3d7"
+name = "duplicate"
+description = "すでにissueまたはPRが存在している"
+
+[frontend]
+color = "38bdf8"
+name = "frontend"
+description = ""
+
+["good first issue"]
+color = "7057ff"
+name = "good first issue"
+description = "オンボーディングタスク"
+
+["help wanted"]
+color = "008672"
+name = "help wanted"
+description = "助けて〜"
+
+[infra]
+color = "c084fc"
+name = "infra"
+description = ""
+
+["デザイン"]
+color = "e879f9"
+name = "デザイン"
+description = "デザインの修正 または リクエスト"
+
+["優先度(中)"]
+color = "fb923c"
+name = "優先度(中)"
+description = "1週間以上は放置したくない"
+
+["優先度(低)"]
+color = "22c55e"
+name = "優先度(低)"
+description = "他にタスクがあるときは着手しなくて良い"
+
+["優先度(高)"]
+color = "dc2626"
+name = "優先度(高)"
+description = "今すぐに取り掛かるべき"
+
+["新規機能"]
+color = "a5f3fc"
+name = "新規機能"
+description = "新規機能の開発 または リクエスト"
+
+["機能変更"]
+color = "99f6e4"
+name = "機能変更"
+description = "機能変更の開発 または リクエスト"

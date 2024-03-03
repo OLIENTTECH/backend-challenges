@@ -7,7 +7,7 @@ import (
 )
 
 type Usecase interface {
-	User() User
+	Example() User
 }
 
 type usecase struct {
@@ -24,6 +24,6 @@ func NewUsecase(tx rdb.TxManager, ds datastore.DataStore, logger *log.Logger) Us
 	}
 }
 
-func (u *usecase) User() User {
+func (u *usecase) Example() User {
 	return NewUserUsecase(u.tx, u.ds, u.logger)
 }

@@ -3,18 +3,18 @@ package main
 import (
 	"os"
 
-	"github.com/OLIENTTECH/backend-challenges/gateway"
+	"github.com/OLIENTTECH/backend-challenges/server"
 	"github.com/spf13/cobra"
 )
 
 func main() {
 	rootCmd := &cobra.Command{
-		Use:   "server",
+		Use:   "entrypoint",
 		Short: "CLI tool for managing DX Henpin services",
 	}
 
 	rootCmd.AddCommand(
-		gateway.NewCommand(),
+		server.NewCommand(),
 	)
 
 	if err := rootCmd.Execute(); err != nil {

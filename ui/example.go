@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-type User interface {
+type Example interface {
 	GetUser(c echo.Context) error
 	ListUsers(c echo.Context) error
 	PostUser(c echo.Context) error
@@ -21,7 +21,7 @@ type user struct {
 	logger      *log.Logger
 }
 
-func NewUser(userUsecase usecase.User, logger *log.Logger) User {
+func NewUser(userUsecase usecase.User, logger *log.Logger) Example {
 	return &user{
 		userUsecase: userUsecase,
 		logger:      logger,

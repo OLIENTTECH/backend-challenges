@@ -1,0 +1,13 @@
+{
+    "name": "backend-challenges",
+    "version": "1.0.0",
+    "main": "index.js",
+    "repository": "https://github.com/OLIENTTECH/backend-challenges.git",
+    "author": "i16fujimoto <fujimoto.ryusei@arakawa-lab.com>",
+    "license": "MIT",
+    "dependencies": {
+        "@commitlint/cli": "^18.4.1",
+        "@commitlint/config-conventional": "^18.4.0",
+        "conventional-recommended-bump": "^9.0.0"
+    }
+}
