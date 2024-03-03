@@ -26,7 +26,7 @@ const (
 func NewCommand() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "server",
-		Short: "OLIENTTECH henpin dx server",
+		Short: "OLIENTTECH backend challenges server",
 	}
 	cmd.RunE = func(_ *cobra.Command, _ []string) error {
 		return run()
