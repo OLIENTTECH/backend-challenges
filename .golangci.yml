@@ -96,7 +96,7 @@ linters-settings:
     sections:
       - standard # Standard section: captures all standard packages.
       - default # Default section: contains all imports that could not be matched to another section type.
-      - prefix(github.com/CyberAgentAI/aoc-daifuku-app/backend) # Custom section: groups all imports with the specified Prefix.
+      - prefix(github.com/OLIENTTECH/backend-challenges) # Custom section: groups all imports with the specified Prefix.
     # Enable custom order of sections.
     # If `true`, make the section order the same as the order of `sections`.
     # Default: false
@@ -108,7 +108,7 @@ linters-settings:
     lang-version: '1.21'
     # Module path which contains the source code being formatted.
     # Default: ""
-    module-path: github.com/CyberAgentAI/aoc-daifuku-app/backend
+    module-path: github.com/OLIENTTECH/backend-challenges
     # Choose whether to use the extra rules.
     # Default: false
     extra-rules: true
