@@ -1,4 +1,4 @@
-package gateway
+package server
 
 import (
 	"github.com/OLIENTTECH/backend-challenges/internal/cerror"
@@ -20,13 +20,13 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 
 	v1 := e.Group("/v1")
 
-	// user group
-	user := v1.Group("/users")
+	// example group
+	example := v1.Group("/examples")
 	{
-		userHandler := handler.User()
-		user.GET("", userHandler.ListUsers)
-		user.POST("", userHandler.PostUser)
-		user.GET("/:userID", userHandler.GetUser)
+		exampleHandler := handler.Example()
+		example.GET("", exampleHandler.ListUsers)
+		example.POST("", exampleHandler.PostUser)
+		example.GET("/:exampleID", exampleHandler.GetUser)
 	}
 
 	return e

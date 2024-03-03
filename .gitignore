@@ -32,3 +32,6 @@ go.work
 
 # End of https://www.toptal.com/developers/gitignore/api/go
 sendgrid.env
+
+**/node_modules
+**/.DS_store

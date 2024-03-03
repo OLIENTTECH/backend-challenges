@@ -1,0 +1,15 @@
+name: assign_review_by_comment by issue_comment
+on: [issue_comment, pull_request_review]
+
+jobs:
+  assign_review_by_comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: assign_review_by_comment
+        # We recommend to use an arbitary latest version
+        # if you don't have any troubles.
+        # You can also specify `master`, but it sometimes might be broken.
+        # https://github.com/cats-oss/github-action-auto-assign
+        uses: cats-oss/github-action-auto-assign@v2.1.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

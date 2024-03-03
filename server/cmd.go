@@ -1,4 +1,4 @@
-package gateway
+package server
 
 import (
 	"context"
@@ -25,8 +25,8 @@ const (
 
 func NewCommand() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "gateway",
-		Short: "OLIENTTECH henpin dx gateway",
+		Use:   "server",
+		Short: "OLIENTTECH henpin dx server",
 	}
 	cmd.RunE = func(_ *cobra.Command, _ []string) error {
 		return run()
@@ -40,7 +40,7 @@ func run() error {
 
 	db, err := postgres.GetDBConnection()
 	if err != nil {
-		log.Panic("gateway: failed to connect to DB", log.Ferror(err))
+		log.Panic("server: failed to connect to DB", log.Ferror(err))
 	}
 	dbClient := postgres.NewClient(db)
 	txManager := postgres.NewTxManager(db)
@@ -53,7 +53,7 @@ func run() error {
 	// Start server
 	go func() {
 		if err := server.Start(httpAddr); err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Error("gateway: failed to start HTTP server", zap.Error(err))
+			log.Error("server: failed to start HTTP server", zap.Error(err))
 		}
 	}()
 
@@ -65,7 +65,7 @@ func run() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second) //nolint:gomnd
 	defer cancel()
 	if err := server.Shutdown(ctx); err != nil {
-		log.Error("gateway: failed to shutdown server gracefully", zap.Error(err))
+		log.Error("server: failed to shutdown server gracefully", zap.Error(err))
 	}
 
 	return nil
