@@ -10,7 +10,7 @@ import (
 func main() {
 	rootCmd := &cobra.Command{
 		Use:   "entrypoint",
-		Short: "CLI tool for managing DX Henpin services",
+		Short: "CLI tool for managing backend challenges server",
 	}
 
 	rootCmd.AddCommand(
