@@ -3,11 +3,5 @@
 CI/CD:
   - any: ['.github/**/*']
 
-frontend:
-  - any: ['frontend/**/*']
-
 backend:
-  - any: ['backend/**/*']
-
-infra:
-  - any: ['infra/**/*']
+  - any: ['*.go']
