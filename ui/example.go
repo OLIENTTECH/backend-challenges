@@ -3,11 +3,12 @@ package ui
 import (
 	"net/http"
 
+	"github.com/labstack/echo/v4"
+
 	"github.com/OLIENTTECH/backend-challenges/internal/cerror"
 	"github.com/OLIENTTECH/backend-challenges/pkg/log"
 	"github.com/OLIENTTECH/backend-challenges/ui/request"
 	"github.com/OLIENTTECH/backend-challenges/usecase"
-	"github.com/labstack/echo/v4"
 )
 
 type Example interface {
