@@ -3,8 +3,9 @@ package main
 import (
 	"os"
 
-	"github.com/OLIENTTECH/backend-challenges/server"
 	"github.com/spf13/cobra"
+
+	"github.com/OLIENTTECH/backend-challenges/cli"
 )
 
 func main() {
@@ -14,7 +15,7 @@ func main() {
 	}
 
 	rootCmd.AddCommand(
-		server.NewCommand(),
+		cli.NewCommand(),
 	)
 
 	if err := rootCmd.Execute(); err != nil {

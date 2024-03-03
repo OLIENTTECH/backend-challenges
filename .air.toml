@@ -7,7 +7,7 @@ tmp_dir = "tmp"
 
 [build]
 # Just plain old shell command. You could use `make` as well.
-cmd = "GOOS=linux GOARCH=amd64 go build -tags timetzdata -o ./tmp/app ./cli/*"
+cmd = "GOOS=linux GOARCH=amd64 go build -tags timetzdata -o ./tmp/app ./server/main.go"
 # Customize binary, can setup environment variables when run your app.
 full_bin = "APP_ENV=dev APP_USER=air ./tmp/app server"
 # Watch these filename extensions.

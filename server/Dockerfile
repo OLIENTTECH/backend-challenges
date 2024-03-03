@@ -12,9 +12,9 @@ WORKDIR ${ROOT}
 RUN apk update && apk add git
 
 RUN go install github.com/cosmtrek/air@v1.49.0
-RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-RUN go install github.com/pressly/goose/v3/cmd/goose@latest
-RUN go install go.uber.org/mock/mockgen@latest
+RUN go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.56.2
+RUN go install github.com/pressly/goose/v3/cmd/goose@v3.18.0
+RUN go install go.uber.org/mock/mockgen@v0.4.0
 
 CMD ["air", "-c", ".air.toml"]
 

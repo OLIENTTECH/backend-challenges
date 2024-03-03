@@ -1,11 +1,12 @@
-package server
+package cli
 
 import (
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+
 	"github.com/OLIENTTECH/backend-challenges/internal/cerror"
 	"github.com/OLIENTTECH/backend-challenges/ui"
 	"github.com/OLIENTTECH/backend-challenges/ui/validator"
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func newEchoServer(handler ui.Handler) *echo.Echo {
