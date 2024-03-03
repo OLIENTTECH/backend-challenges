@@ -4,7 +4,7 @@ services:
   api:
     container_name: api
     build:
-      context: ./docker/server
+      context: ./server
       dockerfile: Dockerfile
       target: dev
     tty: true

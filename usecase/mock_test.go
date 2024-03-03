@@ -3,10 +3,11 @@ package usecase
 import (
 	"testing"
 
+	gomock "go.uber.org/mock/gomock"
+
 	datastoremock "github.com/OLIENTTECH/backend-challenges/mock/datastore"
 	repositorymock "github.com/OLIENTTECH/backend-challenges/mock/repository"
 	"github.com/OLIENTTECH/backend-challenges/pkg/log"
-	gomock "go.uber.org/mock/gomock"
 )
 
 type testFixture struct {
