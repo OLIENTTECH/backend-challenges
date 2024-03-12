@@ -1,0 +1,83 @@
+name: gen schema docs check workflow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - dev
+    paths:
+      - "schema/ddl/**"
+      - ".github/workflows/schema-docs.yml"
+
+env:
+  POSTGRES_DB: postgres
+  POSTGRES_USER: hoge
+  POSTGRES_PASSWORD: hoge
+  POSTGRES_HOST: localhost
+  POSTGRES_PORT: 5432
+
+jobs:
+  gen-schema-docs:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres:latest
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+        options: >-
+          --health-cmd "pg_isready"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: backend/go.mod
+          cache: true
+          cache-dependency-path: backend/go.sum
+      - name: Run migrations
+        working-directory: backend
+        run: |
+          go install github.com/pressly/goose/v3/cmd/goose@latest
+          goose -dir ./schema/ddl postgres "$DB_STRING" up
+        env:
+          DB_STRING: postgres://${{ env.POSTGRES_USER }}:${{ env.POSTGRES_PASSWORD }}@${{ env.POSTGRES_HOST }}:${{ env.POSTGRES_PORT }}/${{ env.POSTGRES_DB }}?sslmode=disable
+
+      - uses: k1low/setup-tbls@v1
+        with:
+          version: v1.65.3
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run tbls for generate database document
+        run: |
+          tbls doc -c .tbls.yml -f
+      - name: Set UUID
+        id: generate-uuid
+        uses: filipstefansson/uuid-action@v1
+        with:
+          name: ${{ github.sha }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6
+        id: new-pr
+        with:
+          commit-message: Schema Docs updated
+          delete-branch: true
+          title: "Schema docs updated for ${{ steps.generate-uuid.outputs.uuid }}"
+          body: |
+            |  | PR自動生成理由 |
+            | --- | --- |
+            | <img src="https://www.vectorlogo.zone/logos/postgresql/postgresql-ar21.svg" width="24"/> | PostgreSQLのスキーマ変更 |
+            | Generated based on | "${{ github.event.head_commit.message }}" |
+          branch: "docs/schema/backend-${{ steps.generate-uuid.outputs.uuid }}"
+          labels: cl-category/notable-change, docs
+          assignees: "${{ github.event.head_commit.author.username }}"
+          token: ${{ secrets.GITHUB_TOKEN }}
