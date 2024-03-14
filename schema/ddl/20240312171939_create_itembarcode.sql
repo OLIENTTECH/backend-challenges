@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS item_barcodes (
+CREATE TABLE IF NOT EXISTS "item_barcodes" (
     "id" char(26) NOT NULL PRIMARY KEY,
     "item_id" char(26) NOT NULL,
     "registrated_at" timestamptz NOT NULL,

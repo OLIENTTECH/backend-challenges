@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS items (
+CREATE TABLE IF NOT EXISTS "items" (
     "id" char(26) NOT NULL PRIMARY KEY,
     "name" VARCHAR(255) NOT NULL UNIQUE,
     "price" INT NOT NULL,

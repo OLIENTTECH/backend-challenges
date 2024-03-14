@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS role_types (
+CREATE TABLE IF NOT EXISTS "role_types" (
     "id" char(26) NOT NULL PRIMARY KEY,
     "type" VARCHAR(255) NOT NULL,
     "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,

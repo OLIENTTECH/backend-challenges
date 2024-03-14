@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS finances (
+CREATE TABLE IF NOT EXISTS "finances" (
     "id" char(26) NOT NULL PRIMARY KEY,
     "shop_id" char(26) NOT NULL,
     "total_amount" INT NOT NULL,

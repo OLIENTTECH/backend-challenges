@@ -1,6 +1,6 @@
 -- +goose Up
 -- +goose StatementBegin
-CREATE TABLE IF NOT EXISTS categories (
+CREATE TABLE IF NOT EXISTS "categories" (
     "id" char(26) NOT NULL PRIMARY KEY,
     "name" VARCHAR(255) NOT NULL UNIQUE,
     "created_at" timestamptz NOT NULL DEFAULT CURRENT_TIMESTAMP,
