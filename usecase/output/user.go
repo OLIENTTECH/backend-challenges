@@ -8,10 +8,13 @@ type ListUsers struct {
 
 type UserDTO struct {
 	ID            string     `json:"id"`
-	LoginID       string     `json:"loginID"`
+	ShopID        string     `json:"shop_id"`
+	Name          string     `json:"name"`
+	Email         string     `json:"email"`
 	Password      string     `json:"password"`
-	FamilyName    string     `json:"familyName"`
-	GivenName     string     `json:"givenName"`
 	Role          string     `json:"role"`
 	LastLoginedAt *time.Time `json:"lastLoginedAt"`
+	CreatedAt     *time.Time `json:"createdAt"`
+	UpdatedAt     *time.Time `json:"updatedAt"`
+	DeletedAt     *time.Time `json:"deletedAt"`
 }

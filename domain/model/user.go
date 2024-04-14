@@ -18,11 +18,11 @@ const (
 type User struct {
 	bun.BaseModel `bun:"users,alias:u"`
 	ID            string       `bun:"id,pk"`
-	LoginID       string       `bun:"login_id,notnull"`
+	ShopID        string       `bun:"shop_id,notnull"`
+	Name          string       `bun:"name,notnull"`
+	Email         string       `bun:"email,notnull"`
 	Password      string       `bun:"password,notnull"`
-	FamilyName    string       `bun:"family_name,notnull"`
-	GivenName     string       `bun:"given_name,notnull"`
-	RoleID        int          `bun:"role_id,notnull"`
+	RoleID        bool          `bun:"is_shop_manager,notnull"`
 	LastLoginedAt bun.NullTime `bun:"last_logined_at,nullzero"`
 	CreatedAt     time.Time    `bun:"created_at,notnull"`
 	UpdatedAt     time.Time    `bun:"updated_at,notnull"`
@@ -34,23 +34,20 @@ func NewUser(
 	password string,
 	familyName string,
 	givenName string,
-	roleID int,
+	roleID bool,
 ) *User {
 	return &User{
 		ID:         uuid.NewUUID(),
-		LoginID:    loginID,
 		Password:   password,
-		FamilyName: familyName,
-		GivenName:  givenName,
 		RoleID:     roleID,
 	}
 }
 
 func (u *User) Role() string {
 	switch u.RoleID {
-	case RoleAdmin:
+	case true:
 		return "admin"
-	case RoleGeneral:
+	case false:
 		return "general"
 	default:
 		return ""
@@ -60,22 +57,24 @@ func (u *User) Role() string {
 func (u *User) SetRoleID(roleType string) {
 	switch roleType {
 	case "admin":
-		u.RoleID = RoleAdmin
+		u.RoleID = true
 	case "general":
-		u.RoleID = RoleGeneral
+		u.RoleID = false
 	default:
-		u.RoleID = 0
+		u.RoleID = false
 	}
 }
 
 func (u *User) ToDTO() *output.UserDTO {
 	return &output.UserDTO{
 		ID:            u.ID,
-		LoginID:       u.LoginID,
+		ShopID:        u.ShopID,
+		Name:          u.Name,
+		Email:         u.Email,
 		Password:      u.Password,
-		FamilyName:    u.FamilyName,
-		GivenName:     u.GivenName,
 		Role:          u.Role(),
 		LastLoginedAt: ctime.NullTimeToPtrJST(u.LastLoginedAt),
+		CreatedAt:     &u.CreatedAt,
+		UpdatedAt:     &u.UpdatedAt,
 	}
 }

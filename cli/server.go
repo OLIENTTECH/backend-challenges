@@ -18,6 +18,7 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 	e.HTTPErrorHandler = cerror.CustomHTTPErrorHandler
 
 	e.GET("/health", handler.HealthCheck().GetHealth)
+	e.GET("/users", handler.User().GetListUsers)
 
 	v1 := e.Group("/v1")
 
