@@ -10,11 +10,17 @@ import (
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 )
 
-type Users interface {
+type User interface {
 	List(ctx context.Context) (*output.ListUsers, error)
 }
 
-func NewUsersUsecase(tx rdb.TxManager, ds datastore.DataStore, logger *log.Logger) Users {
+type userUsecase struct {
+	tx     rdb.TxManager
+	ds     datastore.DataStore
+	logger *log.Logger
+}
+
+func NewUserUsecase(tx rdb.TxManager, ds datastore.DataStore, logger *log.Logger) User {
 	return &userUsecase{
 		tx:     tx,
 		ds:     ds,
@@ -22,7 +28,7 @@ func NewUsersUsecase(tx rdb.TxManager, ds datastore.DataStore, logger *log.Logge
 	}
 }
 
-func (u *userUsecase) UserList(ctx context.Context) (*output.ListUsers, error) {
+func (u *userUsecase) List(ctx context.Context) (*output.ListUsers, error) {
 	users, err := u.ds.User().List(ctx)
 	if err != nil {
 		u.logger.Warn("usecase: failed to get users", log.Ferror(err))

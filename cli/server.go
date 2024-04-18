@@ -18,18 +18,18 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 	e.HTTPErrorHandler = cerror.CustomHTTPErrorHandler
 
 	e.GET("/health", handler.HealthCheck().GetHealth)
-	e.GET("/users", handler.User().GetListUsers)
+	e.GET("/users", handler.User().ListUsers)
 
-	v1 := e.Group("/v1")
+	// v1 := e.Group("/v1")
 
 	// example group
-	example := v1.Group("/examples")
-	{
-		exampleHandler := handler.Example()
-		example.GET("", exampleHandler.ListUsers)
-		example.POST("", exampleHandler.PostUser)
-		example.GET("/:exampleID", exampleHandler.GetUser)
-	}
+	// example := v1.Group("/examples")
+	// {
+	// 	exampleHandler := handler.Example()
+	// 	example.GET("", exampleHandler.ListUsers)
+	// 	example.POST("", exampleHandler.PostUser)
+	// 	example.GET("/:exampleID", exampleHandler.GetUser)
+	// }
 
 	return e
 }

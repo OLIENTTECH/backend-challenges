@@ -13,7 +13,7 @@ import (
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 )
 
-func Test_userList_Get(t *testing.T) {
+func Test_user_List(t *testing.T) {
 	t.Parallel()
 	lastLoginedAt := time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)
 	tests := []struct {
@@ -30,34 +30,34 @@ func Test_userList_Get(t *testing.T) {
 				f.userRepo.EXPECT().List(context.Background()).
 					Return([]*model.User{
 						{
-							ID:       "01HTDPT94BX2YC8AY75T5M9W6X",
-							ShopID:   "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-							Name:     "ユーザー名1",
-							Email:    "test1@example.com",
-							Password: "307170ea-b13d-474d-82d0-5a35f04af8b0",
-							IsShopManager:   true,
+							ID:            "01HTDPT94BX2YC8AY75T5M9W6X",
+							ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+							Name:          "ユーザー名1",
+							Email:         "test1@example.com",
+							Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
+							IsShopManager: true,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
 						},
 						{
-							ID:       "01HTDPT94BF4CPVA9XMTBT09HP",
-							ShopID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-							Name:     "ユーザー名2",
-							Email:    "test2@example.com",
-							Password: "e28f0a3e-28d7-4657-958e-1d20577c69ae",
-							IsShopManager:   true,
+							ID:            "01HTDPT94BF4CPVA9XMTBT09HP",
+							ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:          "ユーザー名2",
+							Email:         "test2@example.com",
+							Password:      "e28f0a3e-28d7-4657-958e-1d20577c69ae",
+							IsShopManager: true,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
 						},
 						{
-							ID:       "01HTDPT94BN5TAQ59Z4KWGR86Y",
-							ShopID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-							Name:     "ユーザー名3",
-							Email:    "test3@example.com",
-							Password: "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
-							IsShopManager:   false,
+							ID:            "01HTDPT94BN5TAQ59Z4KWGR86Y",
+							ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:          "ユーザー名3",
+							Email:         "test3@example.com",
+							Password:      "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
+							IsShopManager: false,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
@@ -124,7 +124,7 @@ func Test_userList_Get(t *testing.T) {
 			if tt.setup != nil {
 				tt.setup(t, f)
 			}
-			got, err := user.UserList(context.Background())
+			got, err := user.List(context.Background())
 			require.Equal(t, tt.want, got)
 			require.Equal(t, tt.wantCode, cerror.GetCode(err))
 		})

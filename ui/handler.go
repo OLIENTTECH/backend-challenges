@@ -7,7 +7,6 @@ import (
 
 type Handler interface {
 	HealthCheck() Health
-	Example() Example
 	User() User
 }
 
@@ -27,10 +26,10 @@ func (h *handler) HealthCheck() Health {
 	return NewHealth()
 }
 
-func (h *handler) Example() Example {
-	return NewUser(h.uc.Example(), h.logger)
-}
+// func (h *handler) Example() Example {
+// 	return NewUser(h.uc.Example(), h.logger)
+// }
 
 func (h *handler) User() User {
-	return NewUsers(h.uc.User(), h.logger)
+	return NewUser(h.uc.User(), h.logger)
 }

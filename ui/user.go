@@ -10,22 +10,22 @@ import (
 )
 
 type User interface {
-	GetListUsers(c echo.Context) error
+	ListUsers(c echo.Context) error
 }
 
 type users struct {
-	userUsecase usecase.Users
+	userUsecase usecase.User
 	logger      *log.Logger
 }
 
-func NewUsers(userUsecase usecase.Users, logger *log.Logger) User {
+func NewUser(userUsecase usecase.User, logger *log.Logger) User {
 	return &users{
 		userUsecase: userUsecase,
 		logger:      logger,
 	}
 }
 
-func (u *users) GetListUsers(c echo.Context) error {
+func (u *users) ListUsers(c echo.Context) error {
 	ctx := c.Request().Context()
 
 	user, err := u.userUsecase.List(ctx)
