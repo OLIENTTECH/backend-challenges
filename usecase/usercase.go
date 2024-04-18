@@ -30,5 +30,5 @@ func (u *usecase) Example() User {
 }
 
 func (u *usecase) User() Users {
-	return NewUsersUsecase(u.tx, u.ds, u.logger) 
+	return NewUsersUsecase(u.tx, u.ds, u.logger)
 }

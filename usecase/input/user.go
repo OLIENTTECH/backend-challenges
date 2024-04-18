@@ -9,5 +9,5 @@ type CreateUserDTO struct {
 	Password   string `json:"password" validate:"required"`
 	FamilyName string `json:"familyName" validate:"required"`
 	GivenName  string `json:"givenName" validate:"required"`
-	RoleID     bool    `json:"roleID" validate:"required"`
+	RoleID     bool   `json:"roleID" validate:"required"`
 }
