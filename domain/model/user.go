@@ -22,7 +22,7 @@ type User struct {
 	Name          string       `bun:"name,notnull"`
 	Email         string       `bun:"email,notnull"`
 	Password      string       `bun:"password,notnull"`
-	RoleID        bool          `bun:"is_shop_manager,notnull"`
+	IsShopManager bool         `bun:"is_shop_manager,notnull"`
 	LastLoginedAt bun.NullTime `bun:"last_logined_at,nullzero"`
 	CreatedAt     time.Time    `bun:"created_at,notnull"`
 	UpdatedAt     time.Time    `bun:"updated_at,notnull"`
@@ -34,17 +34,17 @@ func NewUser(
 	password string,
 	familyName string,
 	givenName string,
-	roleID bool,
+	isShopManager bool,
 ) *User {
 	return &User{
-		ID:         uuid.NewUUID(),
-		Password:   password,
-		RoleID:     roleID,
+		ID:            uuid.NewUUID(),
+		Password:      password,
+		IsShopManager: isShopManager,
 	}
 }
 
 func (u *User) Role() string {
-	switch u.RoleID {
+	switch u.IsShopManager {
 	case true:
 		return "admin"
 	case false:
@@ -54,14 +54,14 @@ func (u *User) Role() string {
 	}
 }
 
-func (u *User) SetRoleID(roleType string) {
+func (u *User) Set (roleType string) {
 	switch roleType {
 	case "admin":
-		u.RoleID = true
+		u.IsShopManager = true
 	case "general":
-		u.RoleID = false
+		u.IsShopManager = false
 	default:
-		u.RoleID = false
+		u.IsShopManager = false
 	}
 }
 

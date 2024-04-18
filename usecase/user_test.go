@@ -35,7 +35,7 @@ func Test_userList_Get(t *testing.T) {
 							Name:     "ユーザー名1",
 							Email:    "test1@example.com",
 							Password: "307170ea-b13d-474d-82d0-5a35f04af8b0",
-							RoleID:   true,
+							IsShopManager:   true,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
@@ -46,7 +46,7 @@ func Test_userList_Get(t *testing.T) {
 							Name:     "ユーザー名2",
 							Email:    "test2@example.com",
 							Password: "e28f0a3e-28d7-4657-958e-1d20577c69ae",
-							RoleID:   true,
+							IsShopManager:   true,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
@@ -57,7 +57,7 @@ func Test_userList_Get(t *testing.T) {
 							Name:     "ユーザー名3",
 							Email:    "test3@example.com",
 							Password: "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
-							RoleID:   false,
+							IsShopManager:   false,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},

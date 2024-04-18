@@ -69,7 +69,7 @@ func (u *userUsecase) Create(ctx context.Context, input *input.CreateUserDTO) (*
 		input.Password,
 		input.FamilyName,
 		input.GivenName,
-		input.RoleID,
+		input.IsShopManager,
 	)
 	err := u.ds.User().Create(ctx, user)
 	if err != nil {
