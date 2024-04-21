@@ -3,15 +3,18 @@ package usecase
 import (
 	"context"
 
+	"github.com/OLIENTTECH/backend-challenges/domain/model"
 	"github.com/OLIENTTECH/backend-challenges/infrastructure/datastore"
 	rdb "github.com/OLIENTTECH/backend-challenges/infrastructure/external/db/postgres"
 	"github.com/OLIENTTECH/backend-challenges/internal/cerror"
 	"github.com/OLIENTTECH/backend-challenges/pkg/log"
+	"github.com/OLIENTTECH/backend-challenges/usecase/input"
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 )
 
 type User interface {
 	List(ctx context.Context) (*output.ListUsers, error)
+	Create(ctx context.Context, input *input.CreateUserDTO) (*output.UserDTO, error)
 }
 
 type userUsecase struct {
@@ -44,4 +47,22 @@ func (u *userUsecase) List(ctx context.Context) (*output.ListUsers, error) {
 	return &output.ListUsers{
 		Users: userList,
 	}, nil
+}
+
+func (u *userUsecase) Create(ctx context.Context, input *input.CreateUserDTO) (*output.UserDTO, error) {
+	user := model.NewUser(
+		input.LoginID,
+		input.ShopID,
+		input.Name,
+		input.Email,
+		input.Password,
+		input.IsShopManager,
+	)
+	err := u.ds.User().Create(ctx, user)
+	if err != nil {
+		return nil, cerror.Wrap(err, "usecase")
+	}
+	userDTO := user.ToDTO()
+
+	return userDTO, nil 
 }

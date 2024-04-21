@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/OLIENTTECH/backend-challenges/pkg/ctime"
-	"github.com/OLIENTTECH/backend-challenges/pkg/uuid"
+	"github.com/OLIENTTECH/backend-challenges/pkg/ulid"
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 	"github.com/uptrace/bun"
 )
@@ -31,15 +31,21 @@ type User struct {
 
 func NewUser(
 	loginID string,
+	shopID string,
+    name string,
+	email string,
 	password string,
-	familyName string,
-	givenName string,
 	isShopManager bool,
 ) *User {
 	return &User{
-		ID:            uuid.NewUUID(),
+		ID:            ulid.NewULID(),
+		ShopID:        shopID,
+		Name:          name,
+		Email:         email,
 		Password:      password,
 		IsShopManager: isShopManager,
+		CreatedAt:     time.Now(),
+		UpdatedAt:     time.Now(),
 	}
 }
 

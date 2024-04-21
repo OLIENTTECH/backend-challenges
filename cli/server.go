@@ -19,6 +19,8 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 
 	e.GET("/health", handler.HealthCheck().GetHealth)
 	e.GET("/users", handler.User().ListUsers)
+	e.POST("/users", handler.User().PostUser)
+
 
 	// v1 := e.Group("/v1")
 

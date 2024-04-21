@@ -6,8 +6,9 @@ type GetUserDTO struct {
 
 type CreateUserDTO struct {
 	LoginID       string `json:"loginID" validate:"required"`
+	ShopID        string `json:"shop_id" validate:"required"`
+	Name          string `json:"name" validate:"required"`
+	Email         string `json:"email" validate:"required"`
 	Password      string `json:"password" validate:"required"`
-	FamilyName    string `json:"familyName" validate:"required"`
-	GivenName     string `json:"givenName" validate:"required"`
 	IsShopManager bool   `json:"is_shop_manager" validate:"required"`
 }
