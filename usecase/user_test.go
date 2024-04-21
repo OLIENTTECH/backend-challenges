@@ -7,9 +7,11 @@ import (
 
 	"github.com/stretchr/testify/require"
 	"github.com/uptrace/bun"
+	"go.uber.org/mock/gomock"
 
 	"github.com/OLIENTTECH/backend-challenges/domain/model"
 	"github.com/OLIENTTECH/backend-challenges/internal/cerror"
+	"github.com/OLIENTTECH/backend-challenges/usecase/input"
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 )
 
@@ -126,6 +128,64 @@ func Test_user_List(t *testing.T) {
 			}
 			got, err := user.List(context.Background())
 			require.Equal(t, tt.want, got)
+			require.Equal(t, tt.wantCode, cerror.GetCode(err))
+		})
+	}
+}
+
+func Test_users_Create(t *testing.T) {
+	t.Parallel()
+	tests := []struct {
+		name     string
+		input    *input.CreateUserDTO
+		setup    func(t *testing.T, f *testFixture)
+		wantCode cerror.Code
+	}{
+		{
+			name: "success",
+			input: &input.CreateUserDTO{
+				LoginID: "exampleUser",
+                ShopID: "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+    			Name: "user1",
+    			Email: "test@example.com",
+    			Password: "examplePass",
+    			IsShopManager: true,
+			},
+			setup: func(t *testing.T, f *testFixture) {
+				t.Helper()
+				f.ds.EXPECT().User().Return(f.userRepo)
+				f.userRepo.EXPECT().Create(context.Background(), gomock.Any()).Return(nil)
+			},
+			wantCode: cerror.OK,
+		},
+		{
+			name: "failed to create user",
+			input: &input.CreateUserDTO{
+				LoginID: "exampleUser",
+                ShopID: "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+    			Name: "user2",
+    			Password: "examplePass",
+    			Email: "test@example.com",
+    			IsShopManager: true,
+			},
+			setup: func(t *testing.T, f *testFixture) {
+				t.Helper()
+				f.ds.EXPECT().User().Return(f.userRepo)
+				f.userRepo.EXPECT().Create(context.Background(), gomock.Any()).Return(cerror.New("dao: failed to create user", cerror.WithPostgreSQLCode()))
+			},
+			wantCode: cerror.PostgreSQL,
+		},
+	}
+	for _, tt := range tests {
+		tt := tt
+		t.Run(tt.name, func (t *testing.T)  {
+			t.Parallel()
+			f := newTestFixture(t)
+			user := newUser(f)
+			if tt.setup != nil {
+				tt.setup(t, f)
+			}
+			_, err := user.Create(context.Background(), tt.input)
 			require.Equal(t, tt.wantCode, cerror.GetCode(err))
 		})
 	}
