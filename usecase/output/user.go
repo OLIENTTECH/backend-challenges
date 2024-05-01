@@ -8,7 +8,7 @@ type ListUsers struct {
 
 type UserDTO struct {
 	ID            string     `json:"id"`
-	ShopID        string     `json:"shop_id"`
+	ShopID        string     `json:"shopID"`
 	Name          string     `json:"name"`
 	Email         string     `json:"email"`
 	Password      string     `json:"password"`
