@@ -9,12 +9,6 @@ import (
 	"github.com/uptrace/bun"
 )
 
-const (
-	// role types
-	RoleAdmin = iota + 1
-	RoleGeneral
-)
-
 type User struct {
 	bun.BaseModel `bun:"users,alias:u"`
 	ID            string       `bun:"id,pk"`
@@ -49,28 +43,6 @@ func NewUser(
 	}
 }
 
-func (u *User) Role() string {
-	switch u.IsShopManager {
-	case true:
-		return "admin"
-	case false:
-		return "general"
-	default:
-		return ""
-	}
-}
-
-func (u *User) Set (roleType string) {
-	switch roleType {
-	case "admin":
-		u.IsShopManager = true
-	case "general":
-		u.IsShopManager = false
-	default:
-		u.IsShopManager = false
-	}
-}
-
 func (u *User) ToDTO() *output.UserDTO {
 	return &output.UserDTO{
 		ID:            u.ID,
@@ -78,7 +50,6 @@ func (u *User) ToDTO() *output.UserDTO {
 		Name:          u.Name,
 		Email:         u.Email,
 		Password:      u.Password,
-		Role:          u.Role(),
 		LastLoginedAt: ctime.NullTimeToPtrJST(u.LastLoginedAt),
 		CreatedAt:     &u.CreatedAt,
 		UpdatedAt:     &u.UpdatedAt,

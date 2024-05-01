@@ -12,7 +12,6 @@ type UserDTO struct {
 	Name          string     `json:"name"`
 	Email         string     `json:"email"`
 	Password      string     `json:"password"`
-	Role          string     `json:"role"`
 	LastLoginedAt *time.Time `json:"lastLoginedAt"`
 	CreatedAt     *time.Time `json:"createdAt"`
 	UpdatedAt     *time.Time `json:"updatedAt"`
