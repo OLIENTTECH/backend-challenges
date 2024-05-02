@@ -38,8 +38,10 @@ func Test_user_List(t *testing.T) {
 							Email:         "test1@example.com",
 							Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
 							IsShopManager: true,
-							LastLoginedAt: bun.NullTime{
-								Time: lastLoginedAt,
+							LastLoginedAt: bun.NullTime{Time: lastLoginedAt},
+							Shop: &model.Shop{
+								ID:   "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+								Name: "ショップ名2",
 							},
 						},
 						{
@@ -52,6 +54,10 @@ func Test_user_List(t *testing.T) {
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
+							Shop: &model.Shop{
+								ID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+								Name: "ショップ名1",
+							},
 						},
 						{
 							ID:            "01HTDPT94BN5TAQ59Z4KWGR86Y",
@@ -63,40 +69,69 @@ func Test_user_List(t *testing.T) {
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
+							Shop: &model.Shop{
+								ID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+								Name: "ショップ名1",
+							},
 						},
 					}, nil)
 			},
 			want: &output.ListUsers{
 				Users: []*output.UserDTO{
 					{
-						ID:            "01HTDPT94BX2YC8AY75T5M9W6X",
-						ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-						Name:          "ユーザー名1",
-						Email:         "test1@example.com",
-						Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
-						LastLoginedAt: &lastLoginedAt,
-						CreatedAt:     &time.Time{},
-						UpdatedAt:     &time.Time{},
+						User: output.User{
+							ID:            "01HTDPT94BX2YC8AY75T5M9W6X",
+							ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+							Name:          "ユーザー名1",
+							Email:         "test1@example.com",
+							Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
+							IsShopManager: false,
+							LastLoginedAt: &lastLoginedAt,
+							CreatedAt:     &time.Time{},
+							UpdatedAt:     &time.Time{},
+						},
+						Shop: output.Shop{
+							ID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+							Name:      "ショップ名2",
+							CreatedAt: &time.Time{},
+							UpdatedAt: &time.Time{},
+						},
 					},
 					{
-						ID:            "01HTDPT94BF4CPVA9XMTBT09HP",
-						ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-						Name:          "ユーザー名2",
-						Email:         "test2@example.com",
-						Password:      "e28f0a3e-28d7-4657-958e-1d20577c69ae",
-						LastLoginedAt: &lastLoginedAt,
-						CreatedAt:     &time.Time{},
-						UpdatedAt:     &time.Time{},
+						User: output.User{
+							ID:            "01HTDPT94BF4CPVA9XMTBT09HP",
+							ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:          "ユーザー名2",
+							Email:         "test2@example.com",
+							Password:      "e28f0a3e-28d7-4657-958e-1d20577c69ae",
+							LastLoginedAt: &lastLoginedAt,
+							CreatedAt:     &time.Time{},
+							UpdatedAt:     &time.Time{},
+						},
+						Shop: output.Shop{
+							ID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:      "ショップ名1",
+							CreatedAt: &time.Time{},
+							UpdatedAt: &time.Time{},
+						},
 					},
 					{
-						ID:            "01HTDPT94BN5TAQ59Z4KWGR86Y",
-						ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-						Name:          "ユーザー名3",
-						Email:         "test3@example.com",
-						Password:      "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
-						LastLoginedAt: &lastLoginedAt,
-						CreatedAt:     &time.Time{},
-						UpdatedAt:     &time.Time{},
+						User: output.User{
+							ID:            "01HTDPT94BN5TAQ59Z4KWGR86Y",
+							ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:          "ユーザー名3",
+							Email:         "test3@example.com",
+							Password:      "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
+							LastLoginedAt: &lastLoginedAt,
+							CreatedAt:     &time.Time{},
+							UpdatedAt:     &time.Time{},
+						},
+						Shop: output.Shop{
+							ID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:      "ショップ名1",
+							CreatedAt: &time.Time{},
+							UpdatedAt: &time.Time{},
+						},
 					},
 				},
 			},
@@ -141,12 +176,12 @@ func Test_users_Create(t *testing.T) {
 		{
 			name: "success",
 			input: &input.CreateUserDTO{
-				LoginID: "exampleUser",
-                ShopID: "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-    			Name: "user1",
-    			Email: "test@example.com",
-    			Password: "examplePass",
-    			IsShopManager: true,
+				LoginID:       "exampleUser",
+				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+				Name:          "user1",
+				Email:         "test@example.com",
+				Password:      "examplePass",
+				IsShopManager: true,
 			},
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
@@ -158,12 +193,12 @@ func Test_users_Create(t *testing.T) {
 		{
 			name: "failed to create user",
 			input: &input.CreateUserDTO{
-				LoginID: "exampleUser",
-                ShopID: "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-    			Name: "user2",
-    			Password: "examplePass",
-    			Email: "test@example.com",
-    			IsShopManager: true,
+				LoginID:       "exampleUser",
+				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+				Name:          "user2",
+				Password:      "examplePass",
+				Email:         "test@example.com",
+				IsShopManager: true,
 			},
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
@@ -175,7 +210,7 @@ func Test_users_Create(t *testing.T) {
 	}
 	for _, tt := range tests {
 		tt := tt
-		t.Run(tt.name, func (t *testing.T)  {
+		t.Run(tt.name, func(t *testing.T) {
 			t.Parallel()
 			f := newTestFixture(t)
 			user := newUser(f)

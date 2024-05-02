@@ -64,5 +64,5 @@ func (u *userUsecase) Create(ctx context.Context, input *input.CreateUserDTO) (*
 	}
 	userDTO := user.ToDTO()
 
-	return userDTO, nil 
+	return userDTO, nil
 }

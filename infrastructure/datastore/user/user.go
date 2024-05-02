@@ -52,7 +52,8 @@ func (u *user) List(ctx context.Context) ([]*model.User, error) {
 	if err := u.dbClient.GetDB().
 		NewSelect().
 		Model(&users).
-		Where("deleted_at IS NULL").
+		Relation("Shop").
+		Where("u.deleted_at IS NULL").
 		Scan(ctx); err != nil {
 		return nil, cerror.Wrap(
 			err,
@@ -81,6 +82,19 @@ func (u *user) Create(ctx context.Context, user *model.User) error {
 			cerror.WithPostgreSQLCode(),
 			cerror.WithClientMsg("dao: failed to create user"),
 		)
+	}
+
+	if user.ShopID != "" {
+		shop := &model.Shop{}
+		err := u.dbClient.GetDB().
+			NewSelect().
+			Model(shop).
+			Where("id = ?", user.ShopID).
+			Scan(ctx)
+		if err != nil {
+			return cerror.Wrap(err, "dao", cerror.WithPostgreSQLCode(), cerror.WithClientMsg("failed to retrieve shop information"))
+		}
+		user.Shop = shop
 	}
 
 	return nil
