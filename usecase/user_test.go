@@ -176,11 +176,9 @@ func Test_users_Create(t *testing.T) {
 		{
 			name: "success",
 			input: &input.CreateUserDTO{
-				LoginID:       "exampleUser",
 				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
 				Name:          "user1",
 				Email:         "test@example.com",
-				Password:      "examplePass",
 				IsShopManager: true,
 			},
 			setup: func(t *testing.T, f *testFixture) {
@@ -193,10 +191,8 @@ func Test_users_Create(t *testing.T) {
 		{
 			name: "failed to create user",
 			input: &input.CreateUserDTO{
-				LoginID:       "exampleUser",
 				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
 				Name:          "user2",
-				Password:      "examplePass",
 				Email:         "test@example.com",
 				IsShopManager: true,
 			},

@@ -51,11 +51,9 @@ func (u *userUsecase) List(ctx context.Context) (*output.ListUsers, error) {
 
 func (u *userUsecase) Create(ctx context.Context, input *input.CreateUserDTO) (*output.UserDTO, error) {
 	user := model.NewUser(
-		input.LoginID,
 		input.ShopID,
 		input.Name,
 		input.Email,
-		input.Password,
 		input.IsShopManager,
 	)
 	err := u.ds.User().Create(ctx, user)

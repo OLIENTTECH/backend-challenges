@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/OLIENTTECH/backend-challenges/pkg/ctime"
+	"github.com/OLIENTTECH/backend-challenges/pkg/password"
 	"github.com/OLIENTTECH/backend-challenges/pkg/ulid"
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 	"github.com/uptrace/bun"
@@ -34,11 +35,9 @@ type Shop struct {
 }
 
 func NewUser(
-	loginID string,
 	shopID string,
     name string,
 	email string,
-	password string,
 	isShopManager bool,
 ) *User {
 	return &User{
@@ -46,7 +45,7 @@ func NewUser(
 		ShopID:        shopID,
 		Name:          name,
 		Email:         email,
-		Password:      password,
+		Password:      password.MakeRandomStr(),
 		IsShopManager: isShopManager,
 		CreatedAt:     time.Now(),
 		UpdatedAt:     time.Now(),
