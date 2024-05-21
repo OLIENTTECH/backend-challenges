@@ -29,4 +29,3 @@ func (d *dataStore) User() repository.User {
 func (d *dataStore) Shop() repository.Shop {
 	return shop.NewShop(d.dbClient)
 }
-
