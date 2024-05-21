@@ -41,7 +41,14 @@ func (u *userUsecase) List(ctx context.Context) (*output.ListUsers, error) {
 
 	userList := make([]*output.UserDTO, 0, len(users))
 	for _, user := range users {
-		userList = append(userList, user.ToDTO())
+		shop, err := u.ds.Shop().Get(ctx, user.ShopID)
+		if err != nil {
+			u.logger.Warn("usecase: failed to get shops", log.Ferror(err))
+		}
+		userList = append(userList, &output.UserDTO{
+			User: *user.ToDTO(),
+			Shop: *shop.ToDTO(),
+		})
 	}
 
 	return &output.ListUsers{
@@ -54,13 +61,21 @@ func (u *userUsecase) Create(ctx context.Context, input *input.CreateUserDTO) (*
 		input.ShopID,
 		input.Name,
 		input.Email,
-		input.IsShopManager,
 	)
 	err := u.ds.User().Create(ctx, user)
 	if err != nil {
 		return nil, cerror.Wrap(err, "usecase")
 	}
-	userDTO := user.ToDTO()
+
+	shop, err := u.ds.Shop().Get(ctx, user.ShopID)
+	if err != nil {
+		u.logger.Warn("usecase: failed to get shops", log.Ferror(err))
+	}
+
+	userDTO := &output.UserDTO{
+		User: *user.ToDTO(),
+		Shop: *shop.ToDTO(),
+	}
 
 	return userDTO, nil
 }
