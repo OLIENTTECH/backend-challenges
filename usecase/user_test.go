@@ -39,10 +39,6 @@ func Test_user_List(t *testing.T) {
 							Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
 							IsShopManager: true,
 							LastLoginedAt: bun.NullTime{Time: lastLoginedAt},
-							Shop: &model.Shop{
-								ID:   "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-								Name: "ショップ名2",
-							},
 						},
 						{
 							ID:            "01HTDPT94BF4CPVA9XMTBT09HP",
@@ -54,10 +50,6 @@ func Test_user_List(t *testing.T) {
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
-							Shop: &model.Shop{
-								ID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-								Name: "ショップ名1",
-							},
 						},
 						{
 							ID:            "01HTDPT94BN5TAQ59Z4KWGR86Y",
@@ -68,10 +60,6 @@ func Test_user_List(t *testing.T) {
 							IsShopManager: false,
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
-							},
-							Shop: &model.Shop{
-								ID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-								Name: "ショップ名1",
 							},
 						},
 					}, nil)
@@ -179,7 +167,6 @@ func Test_users_Create(t *testing.T) {
 				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
 				Name:          "user1",
 				Email:         "test@example.com",
-				IsShopManager: true,
 			},
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
@@ -194,7 +181,6 @@ func Test_users_Create(t *testing.T) {
 				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
 				Name:          "user2",
 				Email:         "test@example.com",
-				IsShopManager: true,
 			},
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
