@@ -39,6 +39,20 @@ func (m *MockDataStore) EXPECT() *MockDataStoreMockRecorder {
 	return m.recorder
 }
 
+// Shop mocks base method.
+func (m *MockDataStore) Shop() repository.Shop {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Shop")
+	ret0, _ := ret[0].(repository.Shop)
+	return ret0
+}
+
+// Shop indicates an expected call of Shop.
+func (mr *MockDataStoreMockRecorder) Shop() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Shop", reflect.TypeOf((*MockDataStore)(nil).Shop))
+}
+
 // User mocks base method.
 func (m *MockDataStore) User() repository.User {
 	m.ctrl.T.Helper()
