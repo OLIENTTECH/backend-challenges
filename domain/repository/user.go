@@ -11,3 +11,7 @@ type User interface {
 	List(ctx context.Context) ([]*model.User, error)
 	Create(ctx context.Context, user *model.User) error
 }
+
+type Shop interface {
+	Get(ctx context.Context, shopID string) (*model.Shop, error)
+}
