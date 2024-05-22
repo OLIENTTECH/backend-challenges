@@ -82,5 +82,6 @@ func (u *user) Create(ctx context.Context, user *model.User) error {
 			cerror.WithClientMsg("dao: failed to create user"),
 		)
 	}
+
 	return nil
 }

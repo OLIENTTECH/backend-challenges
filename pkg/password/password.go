@@ -18,5 +18,6 @@ func MakeRandomStr() string {
 	for _, v := range b {
 		result += string(letters[int(v)%len(letters)])
 	}
+
 	return result
 }
