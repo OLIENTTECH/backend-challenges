@@ -15,6 +15,12 @@ import (
 	"github.com/OLIENTTECH/backend-challenges/usecase/output"
 )
 
+const (
+	ShopID1 = "01F9ZG3ZZW8Y3VW0KR1H7ZE84T"
+	ShopID2 = "01F9ZG3XJ90TPTKBK9FJGHK4QY"
+	ShopID3 = "01F9ZG3TQM2X7VMP8Z9M7P0TZ2"
+)
+
 func Test_user_List(t *testing.T) {
 	t.Parallel()
 	lastLoginedAt := time.Date(2023, time.January, 1, 0, 0, 0, 0, time.UTC)
@@ -29,6 +35,31 @@ func Test_user_List(t *testing.T) {
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
 				f.ds.EXPECT().User().Return(f.userRepo)
+				f.ds.EXPECT().Shop().Return(f.shopRepo).AnyTimes()
+				f.shopRepo.EXPECT().Get(gomock.Any(), gomock.Any()).DoAndReturn(
+					func(_ context.Context, shopID string) (*model.Shop, error) {
+						switch shopID {
+						case ShopID1:
+							return &model.Shop{
+								ID:   ShopID1,
+								Name: "ショップ名1",
+							}, nil
+						case ShopID2:
+							return &model.Shop{
+								ID:   ShopID2,
+								Name: "ショップ名2",
+							}, nil
+						case ShopID3:
+							return &model.Shop{
+								ID:   ShopID3,
+								Name: "ショップ名3",
+							}, nil
+						default:
+							return nil, cerror.New("shop not found")
+						}
+					},
+				).AnyTimes()
+
 				f.userRepo.EXPECT().List(context.Background()).
 					Return([]*model.User{
 						{
@@ -37,27 +68,24 @@ func Test_user_List(t *testing.T) {
 							Name:          "ユーザー名1",
 							Email:         "test1@example.com",
 							Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
-							IsShopManager: true,
 							LastLoginedAt: bun.NullTime{Time: lastLoginedAt},
 						},
 						{
-							ID:            "01HTDPT94BF4CPVA9XMTBT09HP",
-							ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-							Name:          "ユーザー名2",
-							Email:         "test2@example.com",
-							Password:      "e28f0a3e-28d7-4657-958e-1d20577c69ae",
-							IsShopManager: true,
+							ID:       "01HTDPT94BF4CPVA9XMTBT09HP",
+							ShopID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:     "ユーザー名2",
+							Email:    "test2@example.com",
+							Password: "e28f0a3e-28d7-4657-958e-1d20577c69ae",
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
 						},
 						{
-							ID:            "01HTDPT94BN5TAQ59Z4KWGR86Y",
-							ShopID:        "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
-							Name:          "ユーザー名3",
-							Email:         "test3@example.com",
-							Password:      "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
-							IsShopManager: false,
+							ID:       "01HTDPT94BN5TAQ59Z4KWGR86Y",
+							ShopID:   "01F9ZG3ZZW8Y3VW0KR1H7ZE84T",
+							Name:     "ユーザー名3",
+							Email:    "test3@example.com",
+							Password: "08e71f5c-4f30-4c5c-b755-a693ae4b7270",
 							LastLoginedAt: bun.NullTime{
 								Time: lastLoginedAt,
 							},
@@ -73,7 +101,6 @@ func Test_user_List(t *testing.T) {
 							Name:          "ユーザー名1",
 							Email:         "test1@example.com",
 							Password:      "307170ea-b13d-474d-82d0-5a35f04af8b0",
-							IsShopManager: false,
 							LastLoginedAt: &lastLoginedAt,
 							CreatedAt:     &time.Time{},
 							UpdatedAt:     &time.Time{},
@@ -130,6 +157,31 @@ func Test_user_List(t *testing.T) {
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
 				f.ds.EXPECT().User().Return(f.userRepo)
+				f.ds.EXPECT().Shop().Return(f.shopRepo).AnyTimes()
+				f.shopRepo.EXPECT().Get(gomock.Any(), gomock.Any()).DoAndReturn(
+					func(_ context.Context, shopID string) (*model.Shop, error) {
+						switch shopID {
+						case ShopID1:
+							return &model.Shop{
+								ID:   ShopID1,
+								Name: "ショップ名1",
+							}, nil
+						case ShopID2:
+							return &model.Shop{
+								ID:   ShopID2,
+								Name: "ショップ名2",
+							}, nil
+						case ShopID3:
+							return &model.Shop{
+								ID:   ShopID3,
+								Name: "ショップ名3",
+							}, nil
+						default:
+							return nil, cerror.New("shop not found")
+						}
+					},
+				).AnyTimes()
+
 				f.userRepo.EXPECT().List(context.Background()).
 					Return(nil, cerror.New("dao: failed to list users", cerror.WithPostgreSQLCode()))
 			},
@@ -164,13 +216,38 @@ func Test_users_Create(t *testing.T) {
 		{
 			name: "success",
 			input: &input.CreateUserDTO{
-				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-				Name:          "user1",
-				Email:         "test@example.com",
+				ShopID: "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+				Name:   "user1",
+				Email:  "test@example.com",
 			},
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
 				f.ds.EXPECT().User().Return(f.userRepo)
+				f.ds.EXPECT().Shop().Return(f.shopRepo).AnyTimes()
+				f.shopRepo.EXPECT().Get(gomock.Any(), gomock.Any()).DoAndReturn(
+					func(_ context.Context, shopID string) (*model.Shop, error) {
+						switch shopID {
+						case ShopID1:
+							return &model.Shop{
+								ID:   ShopID1,
+								Name: "ショップ名1",
+							}, nil
+						case ShopID2:
+							return &model.Shop{
+								ID:   ShopID2,
+								Name: "ショップ名2",
+							}, nil
+						case ShopID3:
+							return &model.Shop{
+								ID:   ShopID3,
+								Name: "ショップ名3",
+							}, nil
+						default:
+							return nil, cerror.New("shop not found")
+						}
+					},
+				).AnyTimes()
+
 				f.userRepo.EXPECT().Create(context.Background(), gomock.Any()).Return(nil)
 			},
 			wantCode: cerror.OK,
@@ -178,13 +255,38 @@ func Test_users_Create(t *testing.T) {
 		{
 			name: "failed to create user",
 			input: &input.CreateUserDTO{
-				ShopID:        "01F9ZG3XJ90TPTKBK9FJGHK4QY",
-				Name:          "user2",
-				Email:         "test@example.com",
+				ShopID: "01F9ZG3XJ90TPTKBK9FJGHK4QY",
+				Name:   "user2",
+				Email:  "test@example.com",
 			},
 			setup: func(t *testing.T, f *testFixture) {
 				t.Helper()
 				f.ds.EXPECT().User().Return(f.userRepo)
+				f.ds.EXPECT().Shop().Return(f.shopRepo).AnyTimes()
+				f.shopRepo.EXPECT().Get(gomock.Any(), gomock.Any()).DoAndReturn(
+					func(_ context.Context, shopID string) (*model.Shop, error) {
+						switch shopID {
+						case ShopID1:
+							return &model.Shop{
+								ID:   ShopID1,
+								Name: "ショップ名1",
+							}, nil
+						case ShopID2:
+							return &model.Shop{
+								ID:   ShopID2,
+								Name: "ショップ名2",
+							}, nil
+						case ShopID3:
+							return &model.Shop{
+								ID:   ShopID3,
+								Name: "ショップ名3",
+							}, nil
+						default:
+							return nil, cerror.New("shop not found")
+						}
+					},
+				).AnyTimes()
+
 				f.userRepo.EXPECT().Create(context.Background(), gomock.Any()).Return(cerror.New("dao: failed to create user", cerror.WithPostgreSQLCode()))
 			},
 			wantCode: cerror.PostgreSQL,
