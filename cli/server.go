@@ -21,11 +21,13 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 
 	v1 := e.Group("/v1")
 	user := v1.Group("/users")
+	userHandler := handler.User()
 	{
-		userHandler := handler.User()
 		user.GET("", userHandler.ListUsers)
 		user.POST("", userHandler.PostUser)
 	}
+	
+	v1.POST("/login", userHandler.LoginUser)
 
 	return e
 }

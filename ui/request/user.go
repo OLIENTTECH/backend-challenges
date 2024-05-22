@@ -5,6 +5,7 @@ import (
 )
 
 type (
+	LoginUserRequest = input.LoginUserDTO
 	GetUserRequest  = input.GetUserDTO
 	PostUserRequest = input.CreateUserDTO
 )

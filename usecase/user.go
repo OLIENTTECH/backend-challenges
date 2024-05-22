@@ -13,6 +13,7 @@ import (
 )
 
 type User interface {
+	Login(ctx context.Context, input *input.LoginUserDTO) (*output.UserDTO, error)
 	List(ctx context.Context) (*output.ListUsers, error)
 	Create(ctx context.Context, input *input.CreateUserDTO) (*output.UserDTO, error)
 }
@@ -29,6 +30,27 @@ func NewUserUsecase(tx rdb.TxManager, ds datastore.DataStore, logger *log.Logger
 		ds:     ds,
 		logger: logger,
 	}
+}
+
+func (u *userUsecase) Login(ctx context.Context, input *input.LoginUserDTO) (*output.UserDTO, error) {
+	user, err := u.ds.User().Login(ctx, input.ShopID, input.Email, input.Password)
+	if err != nil {
+		u.logger.Warn("usecase: failed to get user", log.Ferror(err))
+
+		return nil, cerror.Wrap(err, "usecase")
+	}
+
+	shop, err := u.ds.Shop().Get(ctx, input.ShopID)
+	if err != nil {
+		u.logger.Warn("usecase: failed to get shops", log.Ferror(err))
+	}
+
+	userDTO := &output.UserDTO{
+		User: *user.ToDTO(),
+		Shop: *shop.ToDTO(),
+	}
+
+	return userDTO, nil
 }
 
 func (u *userUsecase) List(ctx context.Context) (*output.ListUsers, error) {
