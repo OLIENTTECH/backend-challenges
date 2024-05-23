@@ -26,7 +26,7 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 		user.GET("", userHandler.ListUsers)
 		user.POST("", userHandler.PostUser)
 	}
-	
+
 	v1.POST("/login", userHandler.LoginUser)
 
 	return e

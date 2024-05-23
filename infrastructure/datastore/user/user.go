@@ -19,7 +19,7 @@ func NewUser(dbClient rdb.Client) repository.User {
 	}
 }
 
-func (u *user) Login(ctx context.Context, shopID string, email string, password string) (*model.User, error) {
+func (u *user) Login(ctx context.Context, shopID, email, password string) (*model.User, error) {
 	user := &model.User{}
 	if err := u.dbClient.GetDB().
 		NewSelect().

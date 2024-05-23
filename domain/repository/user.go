@@ -7,7 +7,7 @@ import (
 )
 
 type User interface {
-	Login(ctx context.Context, shopID string, email string, password string) (*model.User, error)
+	Login(ctx context.Context, shopID, email, password string) (*model.User, error)
 	Get(ctx context.Context, userID string) (*model.User, error)
 	List(ctx context.Context) ([]*model.User, error)
 	Create(ctx context.Context, user *model.User) error
