@@ -20,15 +20,14 @@ func newEchoServer(handler ui.Handler) *echo.Echo {
 	e.GET("/health", handler.HealthCheck().GetHealth)
 
 	v1 := e.Group("/v1")
-
-	// example group
-	example := v1.Group("/examples")
+	user := v1.Group("/users")
+	userHandler := handler.User()
 	{
-		exampleHandler := handler.Example()
-		example.GET("", exampleHandler.ListUsers)
-		example.POST("", exampleHandler.PostUser)
-		example.GET("/:exampleID", exampleHandler.GetUser)
+		user.GET("", userHandler.ListUsers)
+		user.POST("", userHandler.PostUser)
 	}
+
+	v1.POST("/login", userHandler.LoginUser)
 
 	return e
 }

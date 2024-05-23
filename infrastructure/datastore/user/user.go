@@ -19,6 +19,35 @@ func NewUser(dbClient rdb.Client) repository.User {
 	}
 }
 
+func (u *user) Login(ctx context.Context, shopID, email, password string) (*model.User, error) {
+	user := &model.User{}
+	if err := u.dbClient.GetDB().
+		NewSelect().
+		Model(user).
+		Where("shop_id = ?", shopID).
+		Where("email = ?", email).
+		Where("password = ?", password).
+		Scan(ctx); err != nil {
+		if cerror.IsNoRows(err) {
+			return nil, cerror.Wrap(
+				err,
+				"dao",
+				cerror.WithNotFoundCode(),
+				cerror.WithClientMsg("dao: user not found"),
+			)
+		}
+
+		return nil, cerror.Wrap(
+			err,
+			"dao",
+			cerror.WithPostgreSQLCode(),
+			cerror.WithClientMsg("dao: failed to get user"),
+		)
+	}
+
+	return user, nil
+}
+
 func (u *user) Get(ctx context.Context, userID string) (*model.User, error) {
 	user := &model.User{}
 	if err := u.dbClient.GetDB().
@@ -52,7 +81,7 @@ func (u *user) List(ctx context.Context) ([]*model.User, error) {
 	if err := u.dbClient.GetDB().
 		NewSelect().
 		Model(&users).
-		Where("deleted_at IS NULL").
+		Where("u.deleted_at IS NULL").
 		Scan(ctx); err != nil {
 		return nil, cerror.Wrap(
 			err,

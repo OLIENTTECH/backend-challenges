@@ -1,13 +1,16 @@
 package input
 
+type LoginUserDTO struct {
+	ShopID   string `json:"shopID" validate:"required"`
+	Email    string `json:"email" validate:"required"`
+	Password string `json:"password" validate:"required"`
+}
 type GetUserDTO struct {
 	UserID string `json:"-" param:"userId" validate:"required"`
 }
 
 type CreateUserDTO struct {
-	LoginID    string `json:"loginID" validate:"required"`
-	Password   string `json:"password" validate:"required"`
-	FamilyName string `json:"familyName" validate:"required"`
-	GivenName  string `json:"givenName" validate:"required"`
-	RoleID     int    `json:"roleID" validate:"required"`
+	ShopID string `json:"shopID" validate:"required"`
+	Name   string `json:"name" validate:"required"`
+	Email  string `json:"email" validate:"required"`
 }

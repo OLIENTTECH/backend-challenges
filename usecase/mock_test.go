@@ -13,6 +13,7 @@ import (
 type testFixture struct {
 	ds       *datastoremock.MockDataStore
 	userRepo *repositorymock.MockUser
+	shopRepo *repositorymock.MockShop
 	logger   *log.Logger
 }
 
@@ -23,6 +24,7 @@ func newTestFixture(t *testing.T) *testFixture {
 	return &testFixture{
 		ds:       datastoremock.NewMockDataStore(ctrl),
 		userRepo: repositorymock.NewMockUser(ctrl),
+		shopRepo: repositorymock.NewMockShop(ctrl),
 		logger:   log.New(),
 	}
 }
